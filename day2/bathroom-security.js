@@ -1,38 +1,51 @@
 var instructions = require('./instructions.js').split(', ');
 
-var keypad =
+var keypadNormal =
 [ [1, 2, 3],
   [4, 5, 6],
   [7, 8, 9] ];
 
-var updown = 1, leright = 1;
+var keypadByCommittee =
+[ [0, 0, 1, 0, 0],
+  [0, 2, 3, 4, 0],
+  [5, 6, 7, 8, 9],
+  [0, 'A', 'B', 'C', 0],
+  [0, 0, 'D', 0, 0] ];
 
-function move(step){
-  switch (step) {
-    case 'U':
-      return updown > 0 ? updown-- : 0
-      break;
-    case 'D':
-      return updown < 2 ? updown++ : 2
-      break;
-    case 'L':
-      return leright > 0 ? leright-- : 0
-      break;
-    case 'R':
-      return leright < 2 ? leright++ : 2
-      break;
-    default:
-      break;
-  }
-}
+var part1start = [1, 1],
+    part2start = [2, 0];
 
-function decode(procedure){
+function decode(procedure, keypad, pos){
   return procedure.map(function(bundledSteps) {
     bundledSteps.split('').forEach(function(step){
-      move(step);
+      switch (step) {
+        case 'U':
+          if (keypad[pos[0] - 1] && keypad[pos[0] - 1][pos[1]]) {
+            pos[0]--;
+          }
+          break;
+        case 'D':
+          if (keypad[pos[0] + 1] && keypad[pos[0] + 1][pos[1]]) {
+            pos[0]++;
+          }
+          break;
+        case 'L':
+          if (keypad[pos[0]][pos[1] - 1]) {
+            pos[1]--;
+          }
+          break;
+        case 'R':
+          if (keypad[pos[0]][pos[1] + 1]) {
+            pos[1]++;
+          }
+          break;
+        default:
+          break;
+      }
     })
-    return keypad[updown][leright];
+    return keypad[pos[0]][pos[1]];
   }).join('');
 }
 
-decode(instructions);
+decode(instructions, keypadNormal, part1start);
+decode(instructions, keypadByCommittee, part2start);
