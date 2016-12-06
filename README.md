@@ -9,7 +9,7 @@ Goal is to make time to finish at least part one every day.
 - [x] Day 2: Bathroom Security :1234:
 - [x] Day 3: Squares :black_medium_square:
 - [x] Day 4: Security Through Obscurity :lock:
-- [ ] Day 5: How About a Nice Game of Chess? :question:
+- [x] Day 5: How About a Nice Game of Chess? :question:
 - [ ] Day 6: Signals and Noise :signal_strength:
 - [ ] Day 7
 - [ ] Day 8
