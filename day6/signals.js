@@ -4,19 +4,32 @@ var scramble =
   fs.readFileSync('input.txt', 'utf-8').trim().split('\n');
 
 function mostFrequentChar(dict) {
-  var topNum = 0, topLetter = '';
+  var topNum = 0,
+      topLetter = '';
 
-  for (var letter in dict) {
+  for (var letter in dict || topNum === 0) {
     if (dict[letter] > topNum) {
       topNum = dict[letter];
       topLetter = letter;
     }
   }
-
   return topLetter;
 }
 
-function decode(scrambledStrings) {
+function leastCommonChar(dict) {
+  var leastNum = 0,
+      leastLetter = '';
+
+  for (var letter in dict) {
+    if (dict[letter] < leastNum || leastNum === 0) {
+      leastNum = dict[letter];
+      leastLetter = letter;
+    }
+  }
+  return leastLetter;
+}
+
+function decode(scrambledStrings, test) {
   var len = scrambledStrings[0].length;
   var dict = {}, message = '';
 
@@ -35,10 +48,9 @@ function decode(scrambledStrings) {
   });
 
   for (var i = 0; i <= len; i++) {
-    message += mostFrequentChar(dict[i]);
+    message += test(dict[i]);
   }
-
   return message;
 };
 
-console.log(decode(scramble));
+console.log(decode(scramble, leastCommonChar));
