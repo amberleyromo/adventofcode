@@ -11,7 +11,7 @@ Goal is to make time to finish at least part one every day.
 - [x] Day 4: Security Through Obscurity :lock:
 - [x] Day 5: How About a Nice Game of Chess? :question:
 - [x] Day 6: Signals and Noise :signal_strength:
-- [ ] Day 7
+- [x] Day 7: Internet Protocol Version 7 :satellite:
 - [ ] Day 8
 - [ ] Day 9
 - [ ] Day 10
