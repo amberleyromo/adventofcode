@@ -1,57 +1,27 @@
 var fs = require('fs');
 
 (function solve() {
+  const input = fs.readFileSync('source.txt', 'utf-8').split('')
+    .map(Number);
+    
   console.log({
-    part1: solveByNext(),
-    part2: solveByHalfway()
+    part1: solveByNext(input),
+    part2: solveByHalfway(input)
   })
 })();
 
-function getPuzzle() {
-  const sequence = fs.readFileSync('source.txt', 'utf-8').split('')
-    .map(function(val) {
-      return parseInt(val);
-    });
-    
-  let len = sequence.length;
-  return {
-    sequence,
-    len,
-    lastIdx: len - 1,
-    halfLength: len / 2,
-  }
-}
-
-function solveByNext() {
-  const input = getPuzzle();
-  return input.sequence
-    .reduce(function(sum, val, idx, seq) {
-      let nextVal = seq[idx + 1];
-      if (val === nextVal) {
-        return sum += nextVal
-      }
-      
-      if (idx === input.lastIdx) {
-        let lastVal = seq[idx];
-        return sum += lastVal === seq[0] ? lastVal : 0;
-      }
-      
-      return sum;
+function solveByNext(input) {
+  return input
+    .reduce(function(sum, curr, idx, seq) {
+      let next = idx === seq.length-1 ? seq[0] : seq[idx + 1];
+      return sum += curr === next ? next : 0;
     }, 0);
 }
 
-function solveByHalfway() {
-  const input = getPuzzle();
-  return input.sequence
-    .reduce(function(sum, val, idx, seq) {
-      let idxChange = idx + input.halfLength;
-      let newIdx = idxChange <= input.lastIdx ? idxChange : idxChange - input.len;
-      
-      if (val === seq[newIdx]) {
-        return sum += seq[newIdx]
-      }
-      
-      return sum;
-
+function solveByHalfway(input) {
+  return input
+    .reduce(function(sum, curr, idx, seq) {
+      let halfVal = seq[(idx + seq.length/2) % seq.length];
+      return sum += curr === halfVal ? halfVal : 0;
     }, 0);
 }
